@@ -1,36 +1,114 @@
-package Server.server;
+package com.example.kmeansspringboot.controller;
 
-import Server.data.Data;
-import Server.data.OutOfRangeSampleSize;
-import Server.database.DatabaseConnectionException;
-import Server.database.EmptySetException;
-import Server.database.NoValueException;
-import Server.mining.KMeansMiner;
+import ch.qos.logback.core.util.SystemInfo;
+import com.example.kmeansspringboot.serverComponent.data.Data;
+import com.example.kmeansspringboot.serverComponent.data.OutOfRangeSampleSize;
+import com.example.kmeansspringboot.serverComponent.mining.KMeansMiner;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
-import java.sql.SQLException;
+import java.io.*;
+import java.util.LinkedList;
+import java.util.List;
 
-@RestController
-class ServerOneClient {
+@Controller
+public class MainController {
 
-
-
-    private void closeConnection() {
-        try {
-            String user = socket.getInetAddress().toString();
-            socket.close();
-            System.out.println("Comunicazione chiusa con " + user);
-        } catch (IOException e) {
-            System.err.println("Errore nella chiusura della comunicazione");
-            e.printStackTrace();
-            System.err.println();
-        }
+    public MainController() {
     }
+
+    @GetMapping("/index")
+    public String goToIndex() {
+        return "index";
+    }
+
+    @GetMapping("/kmeans")
+    public String goToKmeans() {
+        return "kmeans";
+    }
+
+    @GetMapping("/newkmeans")
+    public String newKmeans(Model model, HttpSession session) {
+        try {
+            Data data = new Data("localhost", 3306, "MapDB", "MapUser", "map", "playtennis");
+            model.addAttribute("nCluster", data.getNumberOfExamples());
+            session.setAttribute("data", data);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            model.addAttribute("error", "Si è verificato un errore, impossibile eseguire l'operazione");
+            return "index";
+        }
+        return "newkmeans";
+    }
+
+    @PostMapping("/result")
+    public String goToResult(@ModelAttribute("i") String numCluster, Model model, HttpSession session) {
+        try {
+            Data data = (Data) session.getAttribute("data");
+            session.removeAttribute("data");
+            KMeansMiner kMeansMiner = new KMeansMiner(Integer.parseInt(numCluster));
+            int numIter=kMeansMiner.kmeans(data);
+            kMeansMiner.salva(".//Salvataggi//MapDBplaytennis"+numCluster+".dat");
+            model.addAttribute("kmeans", kMeansMiner.getC().getResult(data));
+            model.addAttribute("numIter", numIter);
+
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            model.addAttribute("error", "Si è verificato un errore, impossibile eseguire l'operazione");
+            return "index";
+        }
+        return "result";
+    }
+
+    @PostMapping("/fileresult")
+    public String goToResult(@ModelAttribute("nome") String nomeFile, Model model)
+    {
+        try {
+            KMeansMiner kMeansMiner = new KMeansMiner(".//Salvataggi//"+nomeFile);
+            model.addAttribute("clusterSet", kMeansMiner.getC().getResult());
+        }
+        catch (Exception e) {
+            System.err.println(e.getMessage());
+            System.err.println(e.getClass().getName());
+            model.addAttribute("error", "Si è verificato un errore, impossibile eseguire l'operazione");
+            return "index";
+        }
+        return "fileresult";
+    }
+
+    @GetMapping("/filekmeans")
+    public String selectFileKmeans(Model model) {
+        List<String> nomiFile = new LinkedList<>();
+
+        File cartella = new File("Salvataggi");
+        File[] files = cartella.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                if (file.isFile()) {
+                    nomiFile.add(file.getName());
+                }
+            }
+        }
+        if (nomiFile.size()>0) {
+            model.addAttribute("nomiFile", nomiFile);
+            return "filekmeans";
+        }
+        else model.addAttribute("error", "Non ci sono file salvati");
+        return "index";
+    }
+
+    @GetMapping("/error")
+    public String goToError(Model model) {
+        model.addAttribute("error", "Si è verificato un errore, impossibile eseguire l'operazione");
+        return "index";
+    }
+}
+
+/*
 
     public void run() {
         String tablename = null, server = null, db = null, user = null, pass = null;
@@ -166,5 +244,4 @@ class ServerOneClient {
             }
         }
     }
-
-}
+*/

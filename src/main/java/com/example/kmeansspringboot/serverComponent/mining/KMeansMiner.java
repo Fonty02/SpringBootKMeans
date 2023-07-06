@@ -1,7 +1,9 @@
-package Server.mining;
+package com.example.kmeansspringboot.serverComponent.mining;
 
-import data.Data;
-import data.OutOfRangeSampleSize;
+
+
+import com.example.kmeansspringboot.serverComponent.data.Data;
+import com.example.kmeansspringboot.serverComponent.data.OutOfRangeSampleSize;
 
 import java.io.*;
 

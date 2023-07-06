@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="it"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>KMeans: cosa è</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand">Progetto MAP</a>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" th:href="@{/index}">Home Page</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" th:href="@{/kmeans}">Cos'è il KMeans</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<br>
+
+<div class="page_title">
+    <h1>
+        Cosa è il KMeans?
+    </h1>
+</div>
+<div class="description">
+    Il KMeans è un algoritmo di apprendimento non supervisionato che permette di raggruppare i dati in base alle loro caratteristiche.
+    <br>
+    <br>
+    L'algoritmo è composto da due fasi:
+    <ul>
+    <li>
+        <b>Assegnazione</b>: in questa fase ogni dato viene assegnato al cluster più vicino in base alla distanza euclidea.
+    </li>
+  <li>
+    <b>Aggiornamento</b>: in questa fase i centroidi vengono aggiornati in base ai dati assegnati al cluster.
+  </li>
+</ul>
+</div>
+
+<div class="example">
+Ecco come si presentano i dati iniziali:
+<br>
+<img src="preKMeans.png">
+<br>
+<br>
+    Come si può notare, i dati sono disposti in modo casuale, ed sono dunque difficili da studiare.
+    <br>
+    <br>
+    Dopo aver applicato l'algoritmo KMeans, i dati vengono raggruppati in base alle loro caratteristiche:
+    <br>
+    <img src="postKMeans.png">
+</div>
+
+<div class="explanation">
+ Per maggiori informazioni, visita il <a href="https://flowygo.com/blog/k-means-come-funziona/"> sito </a>
+</div>
+
+</body>
+</html>
+
+<style>
+    .page_title {
+        text-align: center;
+        margin-top: 2%;
+        color: blueviolet;
+    }
+
+    .description {
+        margin-top: 5%;
+    }
+
+</style>

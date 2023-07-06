@@ -1,4 +1,4 @@
-package Server.database;
+package com.example.kmeansspringboot.serverComponent.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

@@ -1,4 +1,4 @@
-package Server.data;
+package com.example.kmeansspringboot.serverComponent.data;
 
 class DiscreteItem extends Item {
     DiscreteItem(DiscreteAttribute attribute, String value) {

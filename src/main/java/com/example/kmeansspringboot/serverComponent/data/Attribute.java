@@ -1,4 +1,4 @@
-package Server.data;
+package com.example.kmeansspringboot.serverComponent.data;
 
 import java.io.Serializable;
 

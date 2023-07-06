@@ -1,7 +1,9 @@
-package Server.mining;
+package com.example.kmeansspringboot.serverComponent.mining;
 
-import data.Data;
-import data.Tuple;
+
+
+import com.example.kmeansspringboot.serverComponent.data.Data;
+import com.example.kmeansspringboot.serverComponent.data.Tuple;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -53,10 +55,7 @@ class Cluster implements Serializable {
     }
 
     public String toString(Data data) {
-        String str = "Centroid=(";
-        for (int i = 0; i < centroid.getLength(); i++)
-            str += centroid.get(i) + (i==centroid.getLength()-1?"":" ");
-        str += ")\nExamples:\n";
+        String str = "";
         for (int i : clusteredData) {
             str += "[";
             for (int j = 0; j < data.getNumberOfAttributes(); j++)

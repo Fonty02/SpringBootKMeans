@@ -1,6 +1,6 @@
-package Server.database;
+package com.example.kmeansspringboot.serverComponent.database;
 
-import database.TableSchema.Column;
+
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -42,7 +42,7 @@ public class TableData {
         return list;
     }
 
-    public Set<Object> getDistinctColumnValues(String table, Column column) throws SQLException {
+    public Set<Object> getDistinctColumnValues(String table, TableSchema.Column column) throws SQLException {
         Set<Object> values = new TreeSet<>();
         Connection con = db.getConnection();
         Statement statement = con.createStatement();
@@ -58,7 +58,7 @@ public class TableData {
         return values;
     }
 
-    public Object getAggregateColumnValue(String table, Column column, QUERY_TYPE aggregate) throws SQLException, NoValueException {
+    public Object getAggregateColumnValue(String table, TableSchema.Column column, QUERY_TYPE aggregate) throws SQLException, NoValueException {
         Connection con = db.getConnection();
         Statement statement = con.createStatement();
         Object o = null;

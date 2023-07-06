@@ -1,4 +1,4 @@
-package Server.data;
+package com.example.kmeansspringboot.serverComponent.data;
 
 class ContinuousItem extends Item {
     ContinuousItem(Attribute attribute, Double value) {

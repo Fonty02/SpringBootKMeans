@@ -1,6 +1,7 @@
-package Server.data;
+package com.example.kmeansspringboot.serverComponent.data;
 
-import database.*;
+
+import com.example.kmeansspringboot.serverComponent.database.*;
 
 import java.sql.SQLException;
 import java.util.*;

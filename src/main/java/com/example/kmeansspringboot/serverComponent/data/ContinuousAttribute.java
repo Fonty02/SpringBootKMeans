@@ -1,4 +1,4 @@
-package Server.data;
+package com.example.kmeansspringboot.serverComponent.data;
 
 //Tale classe modella un attributo continuo (numerico) e include i metodi per la “normalizzazione” del dominio dell'attributo nell'intervallo [0,1]
 //al fine di rendere confrontabili attributi aventi domini diversi

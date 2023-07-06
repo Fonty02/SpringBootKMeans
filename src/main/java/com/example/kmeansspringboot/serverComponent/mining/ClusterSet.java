@@ -1,10 +1,12 @@
-package Server.mining;
+package com.example.kmeansspringboot.serverComponent.mining;
 
-import data.Data;
-import data.OutOfRangeSampleSize;
-import data.Tuple;
+
+import com.example.kmeansspringboot.serverComponent.data.Data;
+import com.example.kmeansspringboot.serverComponent.data.OutOfRangeSampleSize;
+import com.example.kmeansspringboot.serverComponent.data.Tuple;
 
 import java.io.Serializable;
+import java.util.*;
 
 public class ClusterSet implements Serializable {
     private final Cluster[] C;
@@ -62,14 +64,22 @@ public class ClusterSet implements Serializable {
         }
     }
 
-    public String toString() {
-        String str = "";
+    public List<String> getResult() {
+        List<String> result = new LinkedList<>();
         for (Cluster cluster : C) {
-            str += cluster.toString() + "\n";
+            result.add(cluster.toString());
         }
-        return str;
+        return result;
     }
 
+    public Map<String,String> getResult(Data data)
+    {
+        HashMap<String,String> result = new HashMap<>();
+        for (Cluster cluster : C) {
+            result.put(cluster.toString(),cluster.toString(data));
+        }
+        return result;
+    }
     public String toString(Data data) {
         String str = "";
         for (int i = 0; i < C.length; i++) {
